@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  qlyproject:
+    image: ${DOCKER_REGISTRY-}qlyproject
+    build:
+      context: .
+      dockerfile: QLyProject/Dockerfile
+    environment:
+        - DB_PORT=5432
+    ports:
+        - "5000:5000"
+        - "5001:5001"
+  db:
+    image: postgres:latest
+    restart: always  
+    container_name: db
+    environment:
+        - POSTGRES_DB=QuanLy2
+        - POSTGRES_PASSWORD=123456
+    volumes:
+        - ./volumes/data/db:/var/lib/postgresql/data
+    ports:
+        - "5432:5432"
